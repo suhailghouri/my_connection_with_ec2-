@@ -1,12 +1,4 @@
-- name: Check SSH key secret
-  env:
-    KEY: ${{ secrets.EC2_SSH_KEY }}
-  run: |
-    test -n "$KEY" && echo "secret is set" || echo "secret is EMPTY"
-    echo "$KEY" | head -1
-    echo "$KEY" | tail -1
-    echo "$KEY" > k && chmod 600 k && ssh-keygen -y -f k > /dev/null && echo "key parses OK"
-name: Test SSH Connectivity to EC2
+
 
 on:
   workflow_dispatch:
@@ -23,7 +15,16 @@ jobs:
           EC2_PRIVATE_KEY: "github_actions_deploy"
         run: |
           set -eu
-
+- name: Check SSH key secret
+  env:
+    KEY: ${{ secrets.EC2_SSH_KEY }}
+  run: |
+    test -n "$KEY" && echo "secret is set" || echo "secret is EMPTY"
+    echo "$KEY" | head -1
+    echo "$KEY" | tail -1
+    echo "$KEY" > k && chmod 600 k && ssh-keygen -y -f k > /dev/null && echo "key parses OK"
+    
+name: Test SSH Connectivity to EC2
           test -n "$EC2_HOST" || {
             echo "EC2_HOST secret is missing"
             exit 1
