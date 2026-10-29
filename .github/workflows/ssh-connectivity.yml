@@ -1,4 +1,11 @@
-
+- name: Check SSH key secret
+  env:
+    KEY: ${{ secrets.EC2_SSH_KEY }}
+  run: |
+    test -n "$KEY" && echo "secret is set" || echo "secret is EMPTY"
+    echo "$KEY" | head -1
+    echo "$KEY" | tail -1
+    echo "$KEY" > k && chmod 600 k && ssh-keygen -y -f k > /dev/null && echo "key parses OK"
 name: Test SSH Connectivity to EC2
 
 on:
