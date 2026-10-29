@@ -13,7 +13,7 @@ jobs:
         env:
           EC2_HOST: "32.236.201.74"
           EC2_USER: "deploy"
-          EC2_PRIVATE_KEY: "EC2_deploy"
+          EC2_PRIVATE_KEY: "github_actions_deploy"
         run: |
           set -eu
 
